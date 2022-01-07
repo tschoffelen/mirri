@@ -1,7 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Router } from '@reach/router';
 
 import './index.scss';
-import App from './App';
+import Box from './routes/box/Box';
+import Md from './routes/md/Md';
 
-ReactDOM.render(<App/>, document.getElementById('root'));
+ReactDOM.render(<Router>
+	<Box path="/"/>
+	<Md path="/md"/>
+</Router>, document.getElementById('root'));

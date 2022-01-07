@@ -3,7 +3,7 @@ import { ArrowUpCircle, Copy, XCircle } from 'react-feather';
 import { toast, Toaster } from 'react-hot-toast';
 import copy from 'copy-to-clipboard';
 
-import DragAndDrop from './components/DragAndDrop';
+import DragAndDrop from '../../components/DragAndDrop';
 
 const BoxPage = () => {
 	const [text, setText] = useState(null);

@@ -40,6 +40,8 @@ provider:
   lambdaHashingVersion: 20201221
   environment:
     NODE_ENV: production
+  httpApi:
+    cors: true
   iam:
     role:
       statements:

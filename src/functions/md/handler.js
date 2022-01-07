@@ -7,7 +7,7 @@ const dependencies = () => ({
 	s3: new AWS.S3({ useAccelerateEndpoint: true })
 });
 
-export const app = async({ body: {content} }, { s3 }) => {
+export const app = async({ body: { content } }, { s3 }) => {
 	if (!content) {
 		throw new Error('Missing required parameters.');
 	}
@@ -41,14 +41,14 @@ ${content.replace(/<!--/g, '< ! - -')}
 </body>
 </html>`;
 
-	const url = s3.putObject({
+	await s3.putObject({
 		Bucket: 'schof-link-files',
 		Key: key,
 		ContentType: 'text/html',
 		ContentDisposition: `inline; filename="index.html"`,
 		ACL: 'public-read',
 		Body: html
-	});
+	}).promise();
 
 	return {
 		statusCode: 200,
@@ -58,7 +58,7 @@ ${content.replace(/<!--/g, '< ! - -')}
 		},
 		body: JSON.stringify({
 			key,
-			url,
+			url: `https://schof.link/${key}`,
 			publicUrl: `https://schof.link/${key}`,
 		}),
 	};

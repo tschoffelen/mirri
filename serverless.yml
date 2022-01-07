@@ -1,0 +1,66 @@
+service: schof-link
+
+plugins:
+  - serverless-s3-sync
+  - serverless-cloudfront-invalidate
+  - serverless-prune-plugin
+  - serverless-webpack
+  - serverless-cloudformation-sub-variables
+  - serverless-offline
+
+custom:
+  s3Sync:
+    - bucketName: schof-link-files
+      localDir: build/
+      acl: public-read
+      followSymlinks: true
+      deleteRemoved: false
+      defaultContentType: text/html
+  prune:
+    automatic: true
+    number: 20
+  webpack:
+    webpackConfig: webpack.config.js
+    packager: yarn
+    includeModules:
+      packagePath: package.json
+      forceExclude:
+        - aws-sdk
+  cloudfrontInvalidate:
+    - distributionId: EO1YEJXL0AGGJ #TODO
+      items:
+        - "/"
+        - "/static/*"
+        - "/index.html"
+
+provider:
+  name: aws
+  stage: production
+  region: eu-west-1
+  lambdaHashingVersion: 20201221
+  environment:
+    NODE_ENV: production
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - s3:PutObject
+            - s3:PutObjectAcl
+            - s3:GetObject
+            - s3:ListBucket
+            - s3:ListBucketVersions
+          Resource:
+            - 'arn:aws:s3:::schof-link-files'
+            - 'arn:aws:s3:::schof-link-files/*'
+
+package:
+  individually: true
+
+functions:
+  - ${file(./src/functions/get-url/function.yml)}
+
+resources:
+  - ${file(./src/infrastructure/s3.yml)}
+  - ${file(./src/infrastructure/cloudfront.yml)}
+  - ${file(./src/infrastructure/dns.yml)}

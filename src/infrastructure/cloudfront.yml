@@ -1,0 +1,61 @@
+Resources:
+  Distribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Aliases:
+          - 'schof.link'
+          - '*.schof.link'
+        ViewerCertificate:
+          AcmCertificateArn: arn:aws:acm:us-east-1:672895027413:certificate/2c769169-9d2e-4018-837e-c13b4cdb3942
+          MinimumProtocolVersion: TLSv1.1_2016
+          SslSupportMethod: sni-only
+        DefaultCacheBehavior:
+          TargetOriginId: Bucket
+          DefaultTTL: 31536000
+          MinTTL: 31536000
+          MaxTTL: 31536000
+          ViewerProtocolPolicy: allow-all
+          ForwardedValues:
+            QueryString: false
+            Cookies:
+              Forward: none
+          Compress: true
+        CacheBehaviors:
+          - PathPattern: /api/*
+            TargetOriginId: ApiGateway
+            ViewerProtocolPolicy: redirect-to-https
+            DefaultTTL: 0
+            MinTTL: 0
+            MaxTTL: 0
+            ForwardedValues:
+              QueryString: true
+              Cookies:
+                Forward: none
+              Headers:
+                - Access-Control-Request-Headers
+                - Access-Control-Request-Method
+                - Origin
+                - Authorization
+            AllowedMethods:
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - PATCH
+              - POST
+              - DELETE
+        Enabled: true
+        Origins:
+          - Id: Bucket
+            DomainName: schof-link-files.s3-website-eu-west-1.amazonaws.com
+            CustomOriginConfig:
+              HTTPPort: 80
+              HTTPSPort: 443
+              OriginProtocolPolicy: http-only
+          - Id: ApiGateway
+            DomainName: "#{HttpApi}.execute-api.eu-west-1.amazonaws.com"
+            CustomOriginConfig:
+              HTTPSPort: 443
+              OriginProtocolPolicy: https-only
+

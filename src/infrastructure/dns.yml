@@ -1,0 +1,20 @@
+Resources:
+  AppDns:
+    Type: AWS::Route53::RecordSetGroup
+    Properties:
+      HostedZoneId: Z0024471MY4FXVTNCAFW
+      RecordSets:
+        - Name: 'schof.link'
+          Type: A
+          AliasTarget:
+            HostedZoneId: Z2FDTNDATAQYW2 # Always the same for every Cloudfront alias
+            DNSName: !GetAtt
+              - Distribution
+              - DomainName
+        - Name: '*.schof.link'
+          Type: A
+          AliasTarget:
+            HostedZoneId: Z2FDTNDATAQYW2 # Always the same for every Cloudfront alias
+            DNSName: !GetAtt
+              - Distribution
+              - DomainName

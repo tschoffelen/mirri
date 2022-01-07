@@ -40,6 +40,7 @@ const MdPage = () => {
 		}
 	}, []);
 
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const updatePreview = useCallback(
 		debounce((content) => {
 			if (!iframe.current) {

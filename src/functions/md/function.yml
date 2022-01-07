@@ -1,0 +1,9 @@
+md:
+  handler: src/functions/md/handler.handler
+  memorySize: 128
+  timeout: 10
+  events:
+    - httpApi:
+        path: /api/md
+        method: post
+        cors: true

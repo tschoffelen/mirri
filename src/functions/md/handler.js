@@ -7,7 +7,7 @@ const dependencies = () => ({
 	s3: new AWS.S3({ useAccelerateEndpoint: true })
 });
 
-export const app = async({ content }, { s3 }) => {
+export const app = async({ body: {content} }, { s3 }) => {
 	if (!content) {
 		throw new Error('Missing required parameters.');
 	}

@@ -1,4 +1,4 @@
-md:
+redirect:
   handler: src/functions/redirect/handler.handler
   memorySize: 128
   timeout: 10

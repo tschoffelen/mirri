@@ -1,6 +1,6 @@
 md:
   handler: src/functions/md/handler.handler
-  memorySize: 128
+  memorySize: 256
   timeout: 10
   events:
     - httpApi:

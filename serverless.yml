@@ -27,10 +27,12 @@ custom:
       forceExclude:
         - aws-sdk
   cloudfrontInvalidate:
-    - distributionId: EO1YEJXL0AGGJ #TODO
+    - distributionId: EMJNEM0TGFXER
       items:
         - "/"
         - "/static/*"
+        - "/fonts/*"
+        - "/_markdown.css"
         - "/index.html"
 
 provider:

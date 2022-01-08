@@ -532,7 +532,8 @@ html, body, p {
     font-size: 85%;
     line-height: 1.45;
     border-radius: 3px;
-    background: #2d2d2d;
+    background: #212733;
+    color: #fff;
 }
 
 .markdown-body pre code {

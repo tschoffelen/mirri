@@ -1,100 +1,116 @@
-import React, { Component } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ArrowDownCircle, Circle } from 'react-feather';
 
-class DragAndDrop extends Component {
-	state = {
-		drag: false,
+const selectFiles = () => new Promise(resolve => {
+	let input = document.createElement('input');
+	input.type = 'file';
+
+	input.onchange = () => {
+		let files = Array.from(input.files);
+		resolve(files);
 	};
 
-	dropRef = React.createRef();
-	handleDrag = (e) => {
+	input.click();
+});
+
+const DragAndDrop = ({ children, className, handleDrop, handleRedirect }) => {
+	const [dragging, setDragging] = useState(false);
+	const dropRef = useRef();
+
+	const handleDrag = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
 	};
 
-	handleDragIn = (e) => {
+	const handleDragIn = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
 		if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
-			this.setState({ drag: true });
+			setDragging(true);
+		} else if (e.dataTransfer.types && e.dataTransfer.types.length > 0) {
+			setDragging(true);
 		}
 	};
 
-	handleDragOut = (e) => {
+	const handleDragOut = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
-		this.setState({ drag: false });
+		setDragging(false);
 	};
 
-	handleDrop = (e) => {
-		e.preventDefault();
-		e.stopPropagation();
-		this.setState({ drag: false });
-		if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-			this.props.handleDrop(e.dataTransfer.files);
-			e.dataTransfer.clearData();
-		} else if (
-			e.dataTransfer.items[0] &&
-			e.dataTransfer.items[0].kind === 'string'
-		) {
-			e.dataTransfer.items[0].getAsString((string) => {
-				if (string.startsWith('http://') || string.startsWith('https://')) {
-					string = `<html><meta http-equiv="refresh" content="0;URL='${string}'"/>Redirecting to ${string}...</html>`;
-				}
-				this.props.handleDrop([
-					{
-						name: 'r.html',
-						type: 'text/html',
-						body: string,
-					},
-				]);
+	const defaultContent = (
+		<div className="click-target" onClick={async() => {
+			const files = await selectFiles();
+			if (files && files.length) {
+				handleDrop(files);
+			}
+		}}>
+			<Circle size={32}/>
+			<span>Drop your stuff</span>
+		</div>
+	);
+
+	const hoverContent = (
+		<>
+			<ArrowDownCircle size={32}/>
+			<span>Drop it like it's hot</span>
+		</>
+	);
+
+	useEffect(() => {
+		const handleDragDrop = (e) => {
+			e.preventDefault();
+			e.stopPropagation();
+			setDragging(false);
+			if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+				handleDrop(e.dataTransfer.files);
 				e.dataTransfer.clearData();
-			});
+			} else if (
+				e.dataTransfer.items[0] &&
+				e.dataTransfer.items[0].kind === 'string'
+			) {
+				e.dataTransfer.items[0].getAsString((string) => {
+					if (string.startsWith('http://') || string.startsWith('https://')) {
+						handleRedirect(string);
+					} else {
+						handleDrop([
+							{
+								name: 'r.txt',
+								type: 'text/plain',
+								body: string,
+							},
+						]);
+					}
+					e.dataTransfer.clearData();
+				});
+			}
+		};
+
+		if (dropRef.current) {
+			const div = dropRef.current;
+			div.addEventListener('dragenter', handleDragIn);
+			div.addEventListener('dragleave', handleDragOut);
+			div.addEventListener('dragover', handleDrag);
+			div.addEventListener('drop', handleDragDrop);
+			return () => {
+				div.removeEventListener('dragenter', handleDragIn);
+				div.removeEventListener('dragleave', handleDragOut);
+				div.removeEventListener('dragover', handleDrag);
+				div.removeEventListener('drop', handleDragDrop);
+			};
 		}
-	};
+	}, [dropRef, handleDrop, handleRedirect]);
 
-	componentDidMount() {
-		let div = this.dropRef.current;
-		div.addEventListener('dragenter', this.handleDragIn);
-		div.addEventListener('dragleave', this.handleDragOut);
-		div.addEventListener('dragover', this.handleDrag);
-		div.addEventListener('drop', this.handleDrop);
-	}
-
-	componentWillUnmount() {
-		let div = this.dropRef.current;
-		div.removeEventListener('dragenter', this.handleDragIn);
-		div.removeEventListener('dragleave', this.handleDragOut);
-		div.removeEventListener('dragover', this.handleDrag);
-		div.removeEventListener('drop', this.handleDrop);
-	}
-
-	render() {
-		const defaultContent = (
-			<>
-				<Circle size={32}/>
-				<span>Drop your stuff</span>
-			</>
-		);
-
-		const hoverContent = (
-			<>
-				<ArrowDownCircle size={32}/>
-				<span>Drop it like it's hot</span>
-			</>
-		);
-
-		return (
-			<div
-				className={`${this.props.className || ''} ${
-					this.state.drag ? 'active' : ''
-				}`}
-				ref={this.dropRef}
-			>
-				{this.state.drag ? hoverContent : this.props.children || defaultContent}
-			</div>
-		);
-	}
-}
+	return (
+		<div
+			className={`${dragging ? className.replace('success', '') : dragging || className} ${
+				dragging ? 'active' : ''
+			}`}
+			ref={dropRef}
+		>
+			{dragging ? hoverContent : children || defaultContent}
+		</div>
+	);
+};
 
 export default DragAndDrop;

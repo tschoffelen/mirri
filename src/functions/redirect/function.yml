@@ -1,0 +1,9 @@
+md:
+  handler: src/functions/redirect/handler.handler
+  memorySize: 128
+  timeout: 10
+  events:
+    - httpApi:
+        path: /api/redirect
+        method: post
+        cors: true

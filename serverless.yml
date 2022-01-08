@@ -62,6 +62,7 @@ package:
 functions:
   - ${file(./src/functions/get-url/function.yml)}
   - ${file(./src/functions/md/function.yml)}
+  - ${file(./src/functions/redirect/function.yml)}
 
 resources:
   - ${file(./src/infrastructure/s3.yml)}

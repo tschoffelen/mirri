@@ -16,6 +16,9 @@ const BoxPage = () => {
 		if (location.hostname.includes('/www.')) {
 			window.location.href = window.location.href.replace('/www.', '/');
 		}
+		if (location.hostname !== 'localhost' && location.protocol === 'http:') {
+			window.location.href = window.location.href.replace('http://', 'https://');
+		}
 	}, [location]);
 
 	const success = (publicUrl) => {

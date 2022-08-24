@@ -26,14 +26,15 @@ export const app = async({ filename, contentType }, { s3 }) => {
 		ACL: 'public-read',
 	});
 
-	try {
-		const url =
-			'https://hooks.slack.com/services/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';
-		await axios.post(url, {
-			text: `${filename}\n\nhttps://schof.link/${key}`
-		});
-	} catch (e) {
-		console.log(e);
+	if(process.env.SLACK_WEBHOOK) {
+		try {
+			const url = process.env.SLACK_WEBHOOK;
+			await axios.post(url, {
+				text: `${filename}\n\nhttps://schof.link/${key}`
+			});
+		} catch (e) {
+			console.log(e);
+		}
 	}
 
 	return {

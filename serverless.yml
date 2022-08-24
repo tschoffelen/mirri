@@ -42,6 +42,7 @@ provider:
   lambdaHashingVersion: 20201221
   environment:
     NODE_ENV: production
+    SLACK_WEBHOOK: ${env:SLACK_WEBHOOK,''}
   httpApi:
     cors: true
   iam:

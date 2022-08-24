@@ -1,6 +1,7 @@
 import { middleware } from '@flexible-agency/serverless-middleware';
 import { nanoid } from 'nanoid';
 import AWS from 'aws-sdk';
+import axios from 'axios';
 
 const dependencies = () => ({
 	s3: new AWS.S3({ useAccelerateEndpoint: true })
@@ -24,6 +25,17 @@ export const app = async({ filename, contentType }, { s3 }) => {
 		},
 		ACL: 'public-read',
 	});
+
+	try {
+		const url =
+			"https://hooks.slack.com/services/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";
+		await axios.post(url, {
+			text: `${filename}\n\nhttps://schof.link/${key}`,
+			channel: '#box'
+		});
+	} catch (e) {
+		console.log(e);
+	}
 
 	return {
 		statusCode: 200,

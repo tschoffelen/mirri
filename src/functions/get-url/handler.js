@@ -28,10 +28,9 @@ export const app = async({ filename, contentType }, { s3 }) => {
 
 	try {
 		const url =
-			"https://hooks.slack.com/services/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";
+			'https://hooks.slack.com/services/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';
 		await axios.post(url, {
-			text: `${filename}\n\nhttps://schof.link/${key}`,
-			channel: '#box'
+			text: `${filename}\n\nhttps://schof.link/${key}`
 		});
 	} catch (e) {
 		console.log(e);

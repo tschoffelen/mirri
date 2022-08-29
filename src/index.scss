@@ -318,3 +318,18 @@ main {
   align-items: center;
   cursor: pointer;
 }
+
+.includable-tag {
+  opacity: 0.2;
+  transition: opacity 0.2s ease-in-out;
+  position: fixed;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  z-index: 1000;
+  display: block;
+  line-height: 0;
+
+  &:hover {
+    opacity: 1;
+  }
+}

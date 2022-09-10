@@ -20,6 +20,11 @@ Resources:
             QueryString: false
             Cookies:
               Forward: none
+            Headers:
+              - Access-Control-Request-Headers
+              - Access-Control-Request-Method
+              - Origin
+              - Authorization
           Compress: true
         CacheBehaviors:
           - PathPattern: /api/*

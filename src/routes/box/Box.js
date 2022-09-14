@@ -5,9 +5,10 @@ import copy from 'copy-to-clipboard';
 
 import DragAndDrop from '../../components/DragAndDrop';
 import { useLocation } from '@reach/router';
+import { getContentType } from '../../util/contentType';
 
 const BoxPage = () => {
-	const [text, setText] = useState();
+	const [text, setText] = useState(null);
 	const [className, setClassName] = useState('');
 
 	// Redirect www subdomain -> naked domain
@@ -95,7 +96,8 @@ const BoxPage = () => {
 							</>
 						);
 
-						const res = await fetch(`/api/get-url?filename=${encodeURIComponent(file.name)}&contentType=${encodeURIComponent(file.type)}`);
+						const contentType = getContentType(file.type, file.name);
+						const res = await fetch(`/api/get-url?filename=${encodeURIComponent(file.name)}&contentType=${encodeURIComponent(contentType)}`);
 						const { url, publicUrl } = await res.json();
 
 						if (file.body) {
@@ -103,7 +105,7 @@ const BoxPage = () => {
 								method: 'PUT',
 								body: file.body,
 								headers: {
-									'Content-Type': file.type,
+									'Content-Type': contentType,
 									'Content-Disposition': `inline; filename="${file.name}"`
 								},
 							});
@@ -112,6 +114,7 @@ const BoxPage = () => {
 								method: 'PUT',
 								body: file,
 								headers: {
+									'Content-Type': contentType,
 									'Content-Disposition': `inline; filename="${file.name}"`,
 								},
 							});

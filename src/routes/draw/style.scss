@@ -1,0 +1,77 @@
+.draw {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  line-height: 1;
+
+  .excalidraw {
+    --color-primary: #355fc5;
+    --color-primary-darker: #355fc5;
+    --color-primary-darkest: #355fc5;
+    --color-primary-light: #d2daf1;
+
+    main {
+      max-width: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .help-icon, .library-button__label, .HintViewer, .Island.App-toolbar .ToolIcon__lock, .Island.App-toolbar .App-toolbar__divider {
+      display: none;
+    }
+
+    .layer-ui__wrapper__top-right {
+      flex-direction: row-reverse;
+    }
+
+    .App-menu_bottom {
+      bottom: auto;
+      top: 1rem;
+      left: 3.75rem;
+      width: auto;
+    }
+
+    .zoom-button, .undo-redo-buttons button {
+      border: 0 !important;
+    }
+
+    .Island.App-toolbar {
+      border: 0;
+      box-shadow: none;
+    }
+
+    &.excalidraw--view-mode {
+      .App-menu_bottom {
+        display: none;
+      }
+    }
+  }
+
+  .save-button, .edit-button {
+    padding: 0.625rem;
+    box-sizing: border-box;
+    border: 0;
+    border-radius: var(--border-radius-lg);
+    cursor: pointer;
+    height: var(--lg-button-size);
+    gap: 0.5rem;
+    line-height: 0;
+    font-size: 0.7rem;
+    letter-spacing: 0.4px;
+    font-weight: 600;
+  }
+
+  .save-button {
+    color: white;
+    background-color: var(--color-primary);
+  }
+
+  .edit-button {
+    color: var(--color-primary);
+    background-color: white;
+    border: 1px solid var(--color-primary);
+    font-weight: 500;
+  }
+}

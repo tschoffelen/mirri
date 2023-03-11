@@ -320,13 +320,36 @@ main {
   opacity: 0.2;
   transition: opacity 0.2s ease-in-out;
   position: fixed;
-  bottom: 0.5rem;
-  right: 0.5rem;
+  bottom: 1rem;
+  right: 1rem;
   z-index: 1000;
   display: block;
   line-height: 0;
 
   &:hover {
     opacity: 1;
+  }
+}
+
+.toolbox {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 1000;
+  color: rgba(255,255,255,0.3);
+  font-size: 0.7rem;
+  line-height: 1;
+
+  a {
+    color: rgba(255,255,255,0.5);
+    transition: color 0.1s ease-in-out;
+
+    &:hover {
+      color: rgba(255,255,255,1);
+    }
   }
 }

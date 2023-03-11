@@ -4,7 +4,7 @@ import { toast, Toaster } from 'react-hot-toast';
 import copy from 'copy-to-clipboard';
 
 import DragAndDrop from '../../components/DragAndDrop';
-import { useLocation } from '@reach/router';
+import { Link, useLocation } from '@reach/router';
 import { getContentType } from '../../util/contentType';
 
 const BoxPage = () => {
@@ -53,6 +53,11 @@ const BoxPage = () => {
 
     return (
         <div>
+            <div className="toolbox">
+                Toolbox
+                <Link to="/md">/md</Link>
+                <Link to="/draw">/draw</Link>
+            </div>
             <a className="includable-tag" href="https://includable.com/?utm_source=schof.link"
                title="Powered by Includable"
                target="_blank" rel="noopener noreferrer">

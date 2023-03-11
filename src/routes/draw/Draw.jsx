@@ -61,10 +61,45 @@ const Draw = ({ id }) => {
     return (
         <div className="draw">
             <Excalidraw
-                ref={(ref) => excalidraw.current = ref}
+                ref={async (ref) => {
+                    excalidraw.current = ref
+
+                    // Load library from local storage
+                    const initialLibrary = localStorage.getItem('excalidraw-lib');
+                    if (initialLibrary) {
+                        ref.updateLibrary({
+                            libraryItems: JSON.parse(initialLibrary),
+                        })
+                    }
+
+                    // Add any additional libraries from URL hash
+                    if (window.location.hash.startsWith('#addLibrary=')) {
+                        let libraryUrl = window.location.hash.replace('#addLibrary=', '');
+                        libraryUrl = decodeURIComponent(libraryUrl.split('&')[0]);
+                        console.log(libraryUrl);
+                        const request = await fetch(decodeURIComponent(libraryUrl));
+                        const blob = await request.blob();
+                        await ref.updateLibrary({
+                            libraryItems: blob,
+                            prompt: false,
+                            merge: true,
+                            defaultStatus: "published",
+                            openLibraryMenu: true,
+                        });
+                    }
+                }}
+                onLibraryChange={(items) => {
+                    if (!items.length) {
+                        localStorage.removeItem('excalidraw-lib');
+                        return;
+                    }
+                    const serializedItems = JSON.stringify(items);
+                    localStorage.setItem('excalidraw-lib', serializedItems);
+                }}
                 autoFocus
                 viewModeEnabled={!editMode}
                 loading={loading}
+                id="WXU30cL5O3_dmV0Ugw_2n"
                 UIOptions={{
                     welcomeScreen: false,
                 }}

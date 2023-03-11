@@ -10,6 +10,7 @@ import Docs from './routes/docs/Docs';
 ReactDOM.render((
 	<Router>
 		<Md path="/md"/>
+		<Md path="/md/:id"/>
 		<Docs path="/docs"/>
 		<Box default path="/"/>
 	</Router>

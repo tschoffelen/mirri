@@ -6,4 +6,3 @@ redirect:
     - httpApi:
         path: /api/redirect
         method: post
-        cors: true

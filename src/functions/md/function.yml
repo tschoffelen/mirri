@@ -6,4 +6,3 @@ md:
     - httpApi:
         path: /api/md
         method: post
-        cors: true

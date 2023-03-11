@@ -6,6 +6,7 @@
     bottom: 0;
     width: 50vw;
     background: #edeff1;
+    user-select: none;
 
     textarea {
       background: transparent;
@@ -13,6 +14,7 @@
       width: calc(50vw - 96px);
       height: calc(100vh - 206px);
       margin-bottom: 24px;
+      user-select: initial;
 
       line-height: 1.8;
       font-size: 13.5px;
@@ -20,6 +22,17 @@
       font-family: "Source Code Pro", "Source Code Pro for Powerline", "Hack", "yyx-mono", "Menlo", "yyx",
       "Graphik", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji",
       "Segoe UI Emoji", "Segoe UI Symbol";
+    }
+
+    label {
+      margin-left: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #355fc5;
+      user-select: none;
     }
 
     button {

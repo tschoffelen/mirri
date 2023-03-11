@@ -6,8 +6,6 @@ get-url:
     - httpApi:
         path: /api/get-url
         method: get
-        cors: true
     - httpApi:
         path: /api/get-url
         method: post
-        cors: true

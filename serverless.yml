@@ -1,36 +1,27 @@
 service: schof-link
 
 plugins:
-  - serverless-s3-sync
+  - serverless-esbuild
   - serverless-cloudfront-invalidate
-  - serverless-prune-plugin
-  - serverless-webpack
   - serverless-cloudformation-sub-variables
   - serverless-offline
 
 custom:
   s3Sync:
     - bucketName: schof-link-files
-      localDir: build/
+      localDir: dist/
       acl: public-read
       followSymlinks: true
       deleteRemoved: false
       defaultContentType: text/html
-  prune:
-    automatic: true
-    number: 20
-  webpack:
-    webpackConfig: webpack.config.js
+  esbuild:
     packager: yarn
-    includeModules:
-      packagePath: package.json
-      forceExclude:
-        - aws-sdk
   cloudfrontInvalidate:
     - distributionId: EMJNEM0TGFXER
       items:
         - "/"
         - "/static/*"
+        - "/assets/*"
         - "/fonts/*"
         - "/_markdown.css"
         - "/index.html"
@@ -39,7 +30,8 @@ provider:
   name: aws
   stage: production
   region: eu-west-1
-  lambdaHashingVersion: 20201221
+  versionFunctions: false
+  runtime: nodejs16.x
   environment:
     NODE_ENV: production
     SLACK_WEBHOOK: ${env:SLACK_WEBHOOK,''}
@@ -53,11 +45,17 @@ provider:
             - s3:PutObject
             - s3:PutObjectAcl
             - s3:GetObject
+            - s3:HeadObject
             - s3:ListBucket
             - s3:ListBucketVersions
           Resource:
             - 'arn:aws:s3:::schof-link-files'
             - 'arn:aws:s3:::schof-link-files/*'
+        - Effect: Allow
+          Action:
+            - cloudfront:CreateInvalidation
+          Resource:
+            - 'arn:aws:cloudfront::672895027413:distribution/EMJNEM0TGFXER'
 
 package:
   individually: true

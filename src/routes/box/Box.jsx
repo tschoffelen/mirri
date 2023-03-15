@@ -1,26 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ArrowUpCircle, Copy, XCircle } from 'react-feather';
 import { toast, Toaster } from 'react-hot-toast';
 import copy from 'copy-to-clipboard';
+import { Link } from '@reach/router';
 
 import DragAndDrop from '../../components/DragAndDrop';
-import { Link, useLocation } from '@reach/router';
 import { getContentType } from '../../util/contentType';
 
 const BoxPage = () => {
     const [text, setText] = useState(null);
     const [className, setClassName] = useState('');
-
-    // Redirect www subdomain -> naked domain
-    const location = useLocation();
-    useEffect(() => {
-        if (location.hostname.includes('/www.')) {
-            window.location.href = window.location.href.replace('/www.', '/');
-        }
-        if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && location.protocol === 'http:') {
-            window.location.href = window.location.href.replace('http://', 'https://');
-        }
-    }, [location]);
 
     const success = (publicUrl) => {
         setClassName('success');

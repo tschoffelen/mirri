@@ -9,7 +9,7 @@ import Docs from './routes/docs/Docs';
 import Draw from "./routes/draw/Draw";
 
 // Redirect www subdomain -> naked domain
-if (window.location.hostname.includes('/www.')) {
+if (window.location.hostname.startsWith('www.')) {
     window.location.href = window.location.href.replace('/www.', '/');
 }
 if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1' && window.location.protocol === 'http:') {

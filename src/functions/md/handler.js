@@ -13,7 +13,12 @@ export const app = async({ body: { content } }, { s3 }) => {
 	}
 
 	const key = nanoid(7);
-	const converter = new showdown.Converter();
+	const converter = new showdown.Converter({
+		tables: true,
+		strikethrough: true,
+		tasklists: true,
+		ghCodeBlocks: true
+	});
 
 	const html = `<!DOCTYPE html><html lang="en">
 <head>

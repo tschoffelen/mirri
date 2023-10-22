@@ -18,6 +18,11 @@ Resources:
             DNSName: !GetAtt
               - Distribution
               - DomainName
+  AppDnsMirri:
+    Type: AWS::Route53::RecordSetGroup
+    Properties:
+      HostedZoneId: Z07285931B0LMJN77OITY
+      RecordSets:
         - Name: 'mirri.link'
           Type: A
           AliasTarget:

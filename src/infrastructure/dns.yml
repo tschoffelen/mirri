@@ -18,3 +18,18 @@ Resources:
             DNSName: !GetAtt
               - Distribution
               - DomainName
+      RecordSets:
+        - Name: 'mirri.link'
+          Type: A
+          AliasTarget:
+            HostedZoneId: Z2FDTNDATAQYW2 # Always the same for every Cloudfront alias
+            DNSName: !GetAtt
+              - Distribution
+              - DomainName
+        - Name: '*.mirri.link'
+          Type: A
+          AliasTarget:
+            HostedZoneId: Z2FDTNDATAQYW2 # Always the same for every Cloudfront alias
+            DNSName: !GetAtt
+              - Distribution
+              - DomainName

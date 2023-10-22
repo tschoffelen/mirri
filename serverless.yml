@@ -7,15 +7,6 @@ plugins:
   - serverless-offline
 
 custom:
-  s3Sync:
-    - bucketName: schof-link-files
-      localDir: dist/
-      acl: public-read
-      followSymlinks: true
-      deleteRemoved: false
-      defaultContentType: text/html
-  esbuild:
-    packager: yarn
   cloudfrontInvalidate:
     - distributionId: EMJNEM0TGFXER
       items:

@@ -27,13 +27,13 @@ export const app = async({ body: { content } }, { s3 }) => {
   <meta http-equiv="x-ua-compatible" content="ie=edge"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <link href="/_markdown.css" rel="stylesheet" type="text/css" />
-  <link href="https://schof.co/f/gttr/prism-(1).css" rel="stylesheet" type="text/css" />
+  <link href="https://mirri.link/49Y-aoo" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <article class="markdown-body">
   ${converter.makeHtml(content)}
 </article>
-<script src="https://schof.co/f/9x70/prism-(1).js"></script>
+<script src="https://mirri.link/zVMRxri"></script>
 <!--
 
 
@@ -63,8 +63,8 @@ ${content.replace(/<!--/g, '< ! - -')}
 		},
 		body: JSON.stringify({
 			key,
-			url: `https://schof.link/${key}`,
-			publicUrl: `https://schof.link/${key}`,
+			url: `https://mirri.link/${key}`,
+			publicUrl: `https://mirri.link/${key}`,
 		}),
 	};
 };

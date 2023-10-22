@@ -47,7 +47,7 @@ const BoxPage = () => {
                 <Link to="/md">/md</Link>
                 <Link to="/draw">/draw</Link>
             </div>
-            <a className="includable-tag" href="https://includable.com/?utm_source=schof.link"
+            <a className="includable-tag" href="https://includable.com/?utm_source=mirri.link"
                title="Powered by Includable"
                target="_blank" rel="noopener noreferrer">
                 <svg width="63px" height="16px" viewBox="0 0 63 16" version="1.1" xmlns="http://www.w3.org/2000/svg">

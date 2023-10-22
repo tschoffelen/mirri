@@ -73,7 +73,7 @@ export const app = async (
     try {
       const url = process.env.SLACK_WEBHOOK;
       await axios.post(url, {
-        text: `${filename}\n\nhttps://schof.link/${key}`,
+        text: `${filename}\n\nhttps://mirri.link/${key}`,
       });
     } catch (e) {
       console.log(e);
@@ -89,7 +89,7 @@ export const app = async (
     body: JSON.stringify({
       key,
       url,
-      publicUrl: `https://schof.link/${key}`,
+      publicUrl: `https://mirri.link/${key}`,
       editable,
     }),
   };

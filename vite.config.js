@@ -7,7 +7,7 @@ export default defineConfig({
     server: {
         proxy: {
             '/api': {
-                target: 'https://schof.link/api',
+                target: 'https://mirri.link/api',
             }
         }
     }

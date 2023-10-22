@@ -10,7 +10,7 @@ const Draw = ({ id }) => {
 
     useEffect(() => {
         if (id) {
-            fetch(`https://schof.link/${id}?k=${new Date()}`)
+            fetch(`https://mirri.link/${id}?k=${new Date()}`)
                 .then(res => res.json())
                 .then(data => {
                     data.appState.viewModeEnabled = true;
@@ -32,7 +32,7 @@ const Draw = ({ id }) => {
         );
 
         setLoading(true);
-        const res = await fetch(`https://schof.link/api/get-url?${new URLSearchParams({
+        const res = await fetch(`https://mirri.link/api/get-url?${new URLSearchParams({
             filename: 'drawing.json',
             contentType: 'application/json',
             editable: 'true',

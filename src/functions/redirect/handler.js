@@ -31,8 +31,8 @@ export const app = async({ body: { url } }, { s3 }) => {
 		},
 		body: JSON.stringify({
 			key,
-			url: `https://schof.link/${key}`,
-			publicUrl: `https://schof.link/${key}`,
+			url: `https://mirri.link/${key}`,
+			publicUrl: `https://mirri.link/${key}`,
 		}),
 	};
 };

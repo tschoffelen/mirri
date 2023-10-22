@@ -9,7 +9,7 @@ Resources:
           - 'mirri.link'
           - '*.mirri.link'
         ViewerCertificate:
-          AcmCertificateArn: arn:aws:acm:us-east-1:672895027413:certificate/333289bc-b129-4a15-9303-4d1d12b4d98b
+          AcmCertificateArn: arn:aws:acm:us-east-1:672895027413:certificate/de552b7d-1f13-454a-8256-5f54b018ed1d
           MinimumProtocolVersion: TLSv1.1_2016
           SslSupportMethod: sni-only
         DefaultCacheBehavior:

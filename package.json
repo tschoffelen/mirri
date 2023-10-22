@@ -18,14 +18,20 @@
     "showdown": "^2.1.0"
   },
   "scripts": {
-    "start": "vite",
+    "start": "concurrently yarn:start:frontend yarn:start:serverless",
+    "start:frontend": "vite",
+    "start:serverless": "yarn serverless offline start --httpPort 4000",
     "build": "vite build",
     "deploy": "yarn build && serverless deploy --force --verbose && yarn deploy:s3",
-    "deploy:s3": "aws s3 sync ./dist s3://schof-link-files --acl public-read"
+    "deploy:s3": "aws s3 sync ./dist s3://schof-link-files --acl public-read",
+    "test": "playwright test"
   },
   "devDependencies": {
+    "@playwright/test": "^1.39.0",
+    "@types/node": "^20.8.7",
     "@vitejs/plugin-react": "^4.1.0",
     "aws-sdk": "^2.1478.0",
+    "concurrently": "^8.2.2",
     "esbuild": "^0.17.19",
     "sass": "^1.69.4",
     "serverless": "^3.35.2",

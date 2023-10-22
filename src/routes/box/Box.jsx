@@ -19,6 +19,7 @@ const BoxPage = () => {
                     <span className="box-url">{publicUrl}</span>
                     <Copy
                         className="box-copy"
+                        data-testid="copy-button"
                         size={18}
                         onClick={() => {
                             if (copy(publicUrl)) {

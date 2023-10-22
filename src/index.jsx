@@ -12,6 +12,9 @@ import Draw from "./routes/draw/Draw";
 if (window.location.hostname.startsWith('www.')) {
     window.location.href = window.location.href.replace('/www.', '/');
 }
+if (window.location.hostname.includes('schof.link')) {
+    window.location.href = window.location.href.replace('/schof.link', '/mirri.link');
+}
 if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1' && window.location.protocol === 'http:') {
     window.location.href = window.location.href.replace('http://', 'https://');
 }

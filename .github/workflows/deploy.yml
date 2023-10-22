@@ -6,7 +6,7 @@ on:
       - main
 
 concurrency:
-    group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
   build:
@@ -18,7 +18,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'yarn'
+          cache: "yarn"
+      - name: Cache Playwright browsers
+        uses: actions/cache@v3
+        id: playwright-cache
+        with:
+          path: |
+            ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright
       - name: Install dependencies
         run: yarn
       - name: Install Playwright browsers

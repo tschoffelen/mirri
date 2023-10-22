@@ -32,6 +32,12 @@ jobs:
         run: yarn playwright install --with-deps
       - name: Run tests
         run: yarn test
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          AWS_REGION: eu-west-1
+          CI: true
       - name: Upload test report
         uses: actions/upload-artifact@v3
         if: always()

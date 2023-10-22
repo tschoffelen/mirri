@@ -19,17 +19,8 @@ jobs:
         with:
           node-version: 18
           cache: "yarn"
-      - name: Cache Playwright browsers
-        uses: actions/cache@v3
-        id: playwright-cache
-        with:
-          path: |
-            ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright
       - name: Install dependencies
         run: yarn
-      - name: Install Playwright browsers
-        run: yarn playwright install --with-deps
       - name: Run tests
         run: yarn test
         env:

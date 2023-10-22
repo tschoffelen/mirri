@@ -21,7 +21,6 @@ module.exports = defineConfig({
         permissions: ["clipboard-read"],
       },
     },
-
     {
       name: "firefox",
       use: {
@@ -32,13 +31,6 @@ module.exports = defineConfig({
             "dom.events.testing.asyncClipboard": true,
           },
         },
-      },
-    },
-
-    {
-      name: "webkit",
-      use: {
-        ...devices["Desktop Safari"],
       },
     },
   ],

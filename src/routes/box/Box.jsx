@@ -47,6 +47,7 @@ const BoxPage = () => {
                 Toolbox
                 <Link to="/md">/md</Link>
                 <Link to="/draw">/draw</Link>
+                <Link to="/api">/api</Link>
             </div>
             <a className="includable-tag" href="https://includable.com/?utm_source=mirri.link"
                title="Powered by Includable"

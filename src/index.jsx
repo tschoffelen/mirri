@@ -27,6 +27,7 @@ ReactDOM.render((
         <Draw path="/draw"/>
         <Draw path="/draw/:id"/>
         <Docs path="/docs"/>
+        <Docs path="/api"/>
         <Box default path="/"/>
     </Router>
 ), document.getElementById('root'));

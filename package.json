@@ -24,7 +24,7 @@
     "build": "vite build",
     "deploy": "yarn build && serverless deploy --force --verbose && yarn deploy:s3",
     "deploy:s3": "aws s3 sync ./dist s3://schof-link-files --acl public-read",
-    "test": "playwright test"
+    "test": "playwright install && playwright test"
   },
   "devDependencies": {
     "@playwright/test": "^1.39.0",

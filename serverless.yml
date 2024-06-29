@@ -7,6 +7,8 @@ plugins:
   - serverless-offline
 
 custom:
+  esbuild:
+    exclude: []
   cloudfrontInvalidate:
     - distributionId: EMJNEM0TGFXER
       items:
@@ -22,7 +24,9 @@ provider:
   stage: production
   region: eu-west-1
   versionFunctions: false
-  runtime: nodejs16.x
+  runtime: nodejs20.x
+  stackTags:
+    service: mirri
   environment:
     NODE_ENV: production
     SLACK_WEBHOOK: ${env:SLACK_WEBHOOK,''}

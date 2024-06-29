@@ -1,4 +1,4 @@
-import { middleware } from '@flexible-agency/serverless-middleware';
+import { middleware } from '@includable/serverless-middleware';
 import { nanoid } from 'nanoid';
 import AWS from 'aws-sdk';
 

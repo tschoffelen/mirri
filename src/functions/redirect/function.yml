@@ -1,6 +1,6 @@
 redirect:
   handler: src/functions/redirect/handler.handler
-  memorySize: 128
+  memorySize: 512
   timeout: 10
   events:
     - httpApi:

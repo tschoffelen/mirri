@@ -12,6 +12,8 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 const s3 = new S3Client({ region: "eu-west-1", useAccelerateEndpoint: true });
 const cloudfront = new CloudFront({ region: "eu-west-1" });
 
+const Bucket = process.env.BUCKET_NAME;
+
 export const app = async ({ filename, contentType, editable, id }) => {
   if (!filename || !contentType) {
     throw new Error("Missing required parameters.");
@@ -26,7 +28,7 @@ export const app = async ({ filename, contentType, editable, id }) => {
     let meta;
     try {
       const command = new HeadObjectCommand({
-        Bucket: "schof-link-files",
+        Bucket,
         Key: id,
       });
       meta = await s3.send(command);
@@ -55,7 +57,7 @@ export const app = async ({ filename, contentType, editable, id }) => {
   }
 
   const command = new PutObjectCommand({
-    Bucket: "schof-link-files",
+    Bucket,
     Key: key,
     ContentType: contentType,
     ContentDisposition: `inline; filename="${filename}"`,

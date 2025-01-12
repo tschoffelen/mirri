@@ -6,6 +6,8 @@ const s3 = new S3Client({
   useAccelerateEndpoint: true,
 });
 
+const Bucket = process.env.BUCKET_NAME;
+
 export const app = async ({ body: { url } }) => {
   if (!url) {
     throw new Error("Missing required parameters.");
@@ -14,7 +16,7 @@ export const app = async ({ body: { url } }) => {
   const key = nanoid(7);
 
   const command = new PutObjectCommand({
-    Bucket: "schof-link-files",
+    Bucket,
     Key: key,
     ContentType: "text/html",
     ContentDisposition: `inline; filename="index.html"`,

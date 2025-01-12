@@ -8,6 +8,8 @@ const s3 = new S3Client({
   useAccelerateEndpoint: true,
 });
 
+const Bucket = process.env.BUCKET_NAME;
+
 export const app = async ({ body: { content } }) => {
   if (!content) {
     throw new Error("Missing required parameters.");
@@ -48,7 +50,7 @@ ${content.replace(/<!--/g, "< ! - -")}
 </html>`;
 
   const command = new PutObjectCommand({
-    Bucket: "schof-link-files",
+    Bucket,
     Key: key,
     ContentType: "text/html",
     ContentDisposition: `inline; filename="index.html"`,

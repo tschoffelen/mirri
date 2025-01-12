@@ -28,6 +28,7 @@ provider:
   environment:
     NODE_ENV: production
     SLACK_WEBHOOK: ${env:SLACK_WEBHOOK,''}
+    BUCKET_NAME: schof-link-files
   httpApi:
     cors: true
   iam:

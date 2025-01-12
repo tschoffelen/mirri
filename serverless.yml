@@ -24,7 +24,7 @@ provider:
   stage: production
   region: eu-west-1
   versionFunctions: false
-  runtime: nodejs20.x
+  runtime: nodejs22.x
   stackTags:
     service: mirri
   environment:

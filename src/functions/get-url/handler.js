@@ -1,17 +1,18 @@
 import { middleware } from "@includable/serverless-middleware";
 import { nanoid } from "nanoid";
-import AWS from "aws-sdk";
-import axios from "axios";
 
-const dependencies = () => ({
-  s3: new AWS.S3({ useAccelerateEndpoint: true }),
-  cloudfront: new AWS.CloudFront({ region: "eu-west-1" }),
-});
+import { CloudFront } from "@aws-sdk/client-cloudfront";
+import {
+  S3Client,
+  HeadObjectCommand,
+  PutObjectCommand,
+} from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
-export const app = async (
-  { filename, contentType, editable, id },
-  { s3, cloudfront }
-) => {
+const s3 = new S3Client({ region: "eu-west-1", useAccelerateEndpoint: true });
+const cloudfront = new CloudFront({ region: "eu-west-1" });
+
+export const app = async ({ filename, contentType, editable, id }) => {
   if (!filename || !contentType) {
     throw new Error("Missing required parameters.");
   }
@@ -24,12 +25,11 @@ export const app = async (
   if (id && id.length === 7) {
     let meta;
     try {
-      meta = await s3
-        .headObject({
-          Bucket: "schof-link-files",
-          Key: id,
-        })
-        .promise();
+      const command = new HeadObjectCommand({
+        Bucket: "schof-link-files",
+        Key: id,
+      });
+      meta = await s3.send(command);
     } catch (e) {
       throw new Error("File does not exist.");
     }
@@ -41,25 +41,22 @@ export const app = async (
 
     if (meta) {
       // only invalidate if file exists
-      await cloudfront
-        .createInvalidation({
-          DistributionId: "EMJNEM0TGFXER",
-          InvalidationBatch: {
-            CallerReference: Date.now().toString(),
-            Paths: {
-              Quantity: 1,
-              Items: [`/${key}`],
-            },
+      await cloudfront.createInvalidation({
+        DistributionId: "EMJNEM0TGFXER",
+        InvalidationBatch: {
+          CallerReference: Date.now().toString(),
+          Paths: {
+            Quantity: 1,
+            Items: [`/${key}`],
           },
-        })
-        .promise();
+        },
+      });
     }
   }
 
-  const url = s3.getSignedUrl("putObject", {
+  const command = new PutObjectCommand({
     Bucket: "schof-link-files",
     Key: key,
-    Expires: 300,
     ContentType: contentType,
     ContentDisposition: `inline; filename="${filename}"`,
     Metadata: {
@@ -68,12 +65,15 @@ export const app = async (
     },
     ACL: "public-read",
   });
+  const url = await getSignedUrl(s3, command, { expiresIn: 300 });
 
   if (process.env.SLACK_WEBHOOK) {
     try {
       const url = process.env.SLACK_WEBHOOK;
-      await axios.post(url, {
-        text: `${filename}\n\nhttps://mirri.link/${key}`,
+      await fetch(url, {
+        body: JSON.stringify({
+          text: `${filename}\n\nhttps://mirri.link/${key}`,
+        }),
       });
     } catch (e) {
       console.log(e);
@@ -95,4 +95,4 @@ export const app = async (
   };
 };
 
-export const handler = middleware(app).register(dependencies);
+export const handler = middleware(app);

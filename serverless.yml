@@ -7,8 +7,6 @@ plugins:
   - serverless-offline
 
 custom:
-  esbuild:
-    exclude: []
   cloudfrontInvalidate:
     - distributionId: EMJNEM0TGFXER
       items:

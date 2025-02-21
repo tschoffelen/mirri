@@ -92,6 +92,7 @@ export const app = async ({ filename, contentType, editable, id }) => {
       key,
       url,
       publicUrl: `https://mirri.link/${key}`,
+      previewUrl: `https://mirri.link/preview/${key}`,
       editable,
     }),
   };

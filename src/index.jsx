@@ -7,6 +7,7 @@ import Box from "./routes/box/Box";
 import Md from "./routes/md/Md";
 import Docs from "./routes/docs/Docs";
 import Draw from "./routes/draw/Draw";
+import Preview from "./routes/preview/Preview";
 
 // Redirect www subdomain -> naked domain
 if (window.location.hostname.startsWith("www.")) {
@@ -38,6 +39,7 @@ root.render(
     <Draw path="/draw/:id" />
     <Docs path="/docs" />
     <Docs path="/api" />
+    <Preview path="/preview/:id" />
     <Box default path="/" />
   </Router>
 );

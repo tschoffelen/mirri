@@ -3,7 +3,6 @@ import showdown from 'showdown';
 import debounce from 'lodash.debounce';
 
 import './style.scss';
-import { getContentType } from "../../util/contentType";
 
 const converter = new showdown.Converter();
 

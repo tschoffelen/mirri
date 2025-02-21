@@ -4,10 +4,10 @@ Resources:
     Properties:
       DistributionConfig:
         Aliases:
-          - 'schof.link'
-          - '*.schof.link'
-          - 'mirri.link'
-          - '*.mirri.link'
+          - schof.link
+          - "*.schof.link"
+          - mirri.link
+          - "*.mirri.link"
         ViewerCertificate:
           AcmCertificateArn: arn:aws:acm:us-east-1:672895027413:certificate/de552b7d-1f13-454a-8256-5f54b018ed1d
           MinimumProtocolVersion: TLSv1.1_2016
@@ -35,6 +35,9 @@ Resources:
             DefaultTTL: 0
             MinTTL: 0
             MaxTTL: 0
+            CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad # CachingDisabled policy
+            OriginRequestPolicyId: b689b0a8-53d0-40ab-baf2-68738e2966ac # AllViewerExceptHostHeader policy
+            ResponseHeadersPolicyId: 5cc3b908-e619-4b99-88e5-2cf7f45965bd # CORS-With-Preflight policy
             ForwardedValues:
               QueryString: true
               Cookies:
@@ -65,4 +68,3 @@ Resources:
             CustomOriginConfig:
               HTTPSPort: 443
               OriginProtocolPolicy: https-only
-

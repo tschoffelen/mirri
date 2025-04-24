@@ -1,7 +1,7 @@
 import { middleware } from "@includable/serverless-middleware";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { nanoid } from "nanoid";
 import showdown from "showdown";
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
 const s3 = new S3Client({
   region: "eu-west-1",
@@ -25,18 +25,19 @@ export const app = async ({ body: { content } }) => {
 
   const html = `<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="utf-8"/>
+  <meta charset="utf-8" />
   <title>Note</title>
-  <meta http-equiv="x-ua-compatible" content="ie=edge"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="robots" content="noindex, nofollow"/>
   <link href="/_markdown.css" rel="stylesheet" type="text/css" />
-  <link href="https://mirri.link/49Y-aoo" rel="stylesheet" type="text/css" />
+  <link href="/_code-highlighting.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <article class="markdown-body">
   ${converter.makeHtml(content)}
 </article>
-<script src="https://mirri.link/zVMRxri"></script>
+<script src="/_code-highlighting.js"></script>
 <!--
 
 

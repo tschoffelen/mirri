@@ -42,7 +42,7 @@ export const app = async ({ body: { content } }) => {
 
 
 
-${content.replace(/<!--/g, "< ! - -")}
+${content.replace(/<!--/g, "< ! - -").replace(/-->/g, "- - >")}
 
 
 
